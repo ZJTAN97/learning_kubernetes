@@ -15,7 +15,6 @@
 -   YAML files --> application manifests
 
 <br>
-<br>
 
 # 2. How Kubernetes runs and manages containers
 
@@ -26,7 +25,6 @@
 -   All containers in a pod are part of the same virtual environment, so they share the same network address and can communicate using localhost.
 
 <br>
-<br>
 
 # 3. Pods in Kubernetes
 
@@ -34,7 +32,6 @@
 -   Containers live inside a pod.
 -   a pod can have multiple containers.
 
-<br>
 <br>
 
 # 4. Replicasets in Kubernetes
