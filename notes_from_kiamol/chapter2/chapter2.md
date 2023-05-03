@@ -1,10 +1,10 @@
 # 2.1 How Kubernetes runs and manages containers
 
--   Kubernetes wraps the container in another virtualized environment:
-    the Pod.
--   A Pod is a unit of compute, which runs on a single node in the cluster
-    -   A Pod has its own virtual IP address
--   All the containers in a Pod are part of the same virtual environment, so they share same network address and communicate using localhost
+- Kubernetes wraps the container in another virtualized environment:
+  the Pod.
+- A Pod is a unit of compute, which runs on a single node in the cluster
+  - A Pod has its own virtual IP address
+- All the containers in a Pod are part of the same virtual environment, so they share same network address and communicate using localhost
 
 ```
 # Some basic commands
@@ -24,17 +24,17 @@ kubectl describe pod hello-kiamol
 
 ```
 
--   Pods are allocated to one node when they are created
--   It is that node's responsibility to manage the pod and its containers
--   Does that by working with the container runtime using a known API called the CRI (Container Runtime Interface)
+- Pods are allocated to one node when they are created
+- It is that node's responsibility to manage the pod and its containers
+- Does that by working with the container runtime using a known API called the CRI (Container Runtime Interface)
 
 <br>
 
 # 2.2 Running Pods with controllers
 
--   A controller is a kubernetes resource that manages other resources
--   works with Kubernetes API to watch the current state of the system
--   Kubernetes has many controllers, but the main one for managing Pods is the `Deployment`
+- A controller is a kubernetes resource that manages other resources
+- works with Kubernetes API to watch the current state of the system
+- Kubernetes has many controllers, but the main one for managing Pods is the `Deployment`
 
 ```
 
@@ -73,4 +73,28 @@ spec:
 
 ```
 
-# stop at page 52
+- TIL: Kubectl does not need a local copy of a manifest file. Can read contents from any public URL
+
+```
+# Example
+kubectl apply -f https://raw.githubusercontent.com/sixeyed/kiamol/master/ch02/pod.yaml
+
+```
+
+<br>
+
+# 2.5 Understanding kubernetes resource management
+
+```
+# list all running Pods:
+kubectl get pods
+
+# delete all Pods:
+kubectl delete pods --all
+
+# check again:
+kubectl get pods
+
+```
+
+# stop at page 60
