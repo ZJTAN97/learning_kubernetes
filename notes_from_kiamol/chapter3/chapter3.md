@@ -62,3 +62,33 @@ spec:
 -   The default type of Service in Kubernetes is called ClusterIP
 -   The IP address works only within the
     cluster, so ClusterIP Services are useful only for communicating between Pods.
+
+```
+# Example of client and api with service
+
+# run the website and API as separate Deployments:
+kubectl apply -f numbers/api.yaml -f numbers/web.yaml
+
+# wait for the Pod to be ready:
+kubectl wait --for=condition=Ready pod -l app=numbers-web
+
+# forward a port to the web app:
+kubectl port-forward deploy/numbers-web 8080:80
+
+# browse to the site at http://localhost:8080 and click the Go button
+# —you'll see an error message
+# exit the port forward:
+ctrl-c
+
+
+# deploy the Service from listing 3.2:
+kubectl apply -f numbers/api-service.yaml
+
+# check the Service details:
+kubectl get svc numbers-api
+
+```
+
+<br>
+
+## 3.3 Routing external traffic to pods
