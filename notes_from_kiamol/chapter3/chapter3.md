@@ -92,3 +92,55 @@ kubectl get svc numbers-api
 <br>
 
 ## 3.3 Routing external traffic to pods
+
+-   use a type of Service called `LoadBalancer`
+-   another way to look at service is that it communicate from Pods to components outside of the cluster
+
+![image](./load-balancer-service.png)
+
+Example manifest
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+ name: numbers-web
+spec:
+ ports:
+ - port: 8080 # The port the Service listens on
+ targetPort: 80 # The port the traffic is sent to on the Pod
+ selector:
+ app: numbers-web
+ type: LoadBalancer # This Service is available for external traffic.
+
+
+```
+
+Applying
+
+```
+# deploy the LoadBalancer Service for the website—if your firewall checks
+# that you want to allow traffic, then it is OK to say yes:
+kubectl apply -f numbers/web-service.yaml
+
+# check the details of the Service:
+kubectl get svc numbers-web
+
+# use formatting to get the app URL from the EXTERNAL-IP field:
+kubectl get svc numbers-web -o jsonpath='http://{.status.loadBalancer.ingress[0].*}:8080'
+
+```
+
+Node Ports (Not widely used)
+
+-   There is a Service type you can use that listens for network traffic coming into the cluster and directs it to a pod, the `NodePort`
+-   `NodePort` services do not require an external load balancer. Every node in the cluster listens on the port specified in the Service and sends traffic to the target port on the pod.
+
+<br>
+
+## 3.4 Routing Traffic outside Kubernetes
+
+-   Using an `ExternalName` Service lets you use local cluster addresses for remote components
+-   `ExternalName` Services can be a useful way to deal with differences between environments that you cannot work around in your app configuration.
+
+# stop at page 77
